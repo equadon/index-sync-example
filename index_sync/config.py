@@ -161,7 +161,7 @@ SEARCH_SYNC_JOBS = dict(
         cls='index_sync.sync.RecordSyncJob',
         params=dict(
             rollover_threshold=100,
-            old_es_client=dict(host='localhost', port=9200),
+            old_es_client=dict(host='http://es2', port=9200),
             new_es_client=SEARCH_ELASTIC_HOSTS[0],
             source_indexes=['records-record-v1.0.0'],
             dest_indexes=['records-record-v1.0.0'],

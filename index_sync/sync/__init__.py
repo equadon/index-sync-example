@@ -13,11 +13,4 @@ from .. import config
 
 
 class RecordSyncJob(SyncJob):
-    def __init__(self, rollover_threshold, source_indexes, dest_indexes,
-                 **kwargs):
-        """Records sync job."""
-        super(RecordSyncJob, self).__init__(
-            rollover_threshold=rollover_threshold,
-            source_indexes=source_indexes,
-            dest_indexes=dest_indexes
-        )
+    pass
