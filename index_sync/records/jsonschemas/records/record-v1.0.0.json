@@ -5,7 +5,7 @@
   "title": "Index Sync v1.0.0",
   "type": "object",
   "properties": {
-    "name": {
+    "title": {
       "description": "Record title.",
       "type": "string"
     },
