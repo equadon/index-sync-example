@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2019 CERN.
+#
+# Index Sync is free software; you can redistribute it and/or modify it under
+# the terms of the MIT License; see LICENSE file for more details.
+
+set -e
+
+mkdir sql
+docker-compose exec db pg_dumpall -c -U index-sync | gzip > sql/dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql.gz
