@@ -155,3 +155,16 @@ DEBUG_TB_INTERCEPT_REDIRECTS = False
 SEARCH_ELASTIC_HOSTS = [
     dict(host='localhost', port=9202)
 ]
+
+SEARCH_SYNC_JOBS = dict(
+    records=dict(
+        cls='index_sync.sync.RecordSyncJob',
+        params=dict(
+            rollover_threshold=100,
+            old_es_client=dict(host='localhost', port=9200),
+            new_es_client=SEARCH_ELASTIC_HOSTS[0],
+            source_indexes=['records-record-v1.0.0'],
+            dest_indexes=['records-record-v1.0.0'],
+        )
+    )
+)
