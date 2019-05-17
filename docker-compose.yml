@@ -36,19 +36,19 @@ services:
     extends:
       file: docker-services.yml
       service: es2
-  es6:
-    extends:
-      file: docker-services.yml
-      service: es6
-  # es7:
+  # es6:
   #   extends:
   #     file: docker-services.yml
-  #     service: es7
-  kibana6:
+  #     service: es6
+  es7:
     extends:
       file: docker-services.yml
-      service: kibana6
-  # kibana7:
+      service: es7
+  # kibana6:
   #   extends:
   #     file: docker-services.yml
-  #     service: kibana7
+  #     service: kibana6
+  kibana7:
+    extends:
+      file: docker-services.yml
+      service: kibana7
