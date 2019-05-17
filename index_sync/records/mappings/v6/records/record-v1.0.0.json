@@ -8,7 +8,7 @@
           "type": "text",
           "index": false
         },
-        "title": {
+        "name": {
           "type": "text",
           "copy_to": "suggest_title"
         },

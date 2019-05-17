@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8c14b3b9aadf41b04aa3c2027a6219feabaa802842bbc22b30ba9d090118b66a"
+            "sha256": "4dd3b129596cd25f3f5eb1491b5d590b5a093d8fa433204919db109ceda61cf9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -205,17 +205,17 @@
         },
         "elasticsearch": {
             "hashes": [
-                "sha256:bb8f9a365ba6650d599428538c8aed42033264661d8f7d353da59d5892305f72",
-                "sha256:fead47ebfcaabd1c53dbfc21403eb99ac207eef76de8002fe11a1c8ec9589ce2"
+                "sha256:7546cc08e3899716e12fe67d12d7cfe9a64647014d1134b014c3c392b63cad42",
+                "sha256:aada5cfdc4a543c47098eb3aca6663848ef5d04b4324935ced441debc11ec98b"
             ],
-            "version": "==2.4.1"
+            "version": "==6.3.1"
         },
         "elasticsearch-dsl": {
             "hashes": [
-                "sha256:99bbb4dcbcfb5db4f57499237f24acf1397543e895e99994a09af2a6fbef93bc",
-                "sha256:c8132c6e1bdfc5c345999d3949dd53a53b59ea73e2ee005f695de78be0552ceb"
+                "sha256:5114a38a88e93a4663782eae07a1e8084ba333c49887335c83de8b8043bc72b2",
+                "sha256:d6d974cd2289543a3350690494a43fe9996485b8dc6f1d8758cb56bee01244bd"
             ],
-            "version": "==2.2.0"
+            "version": "==6.1.0"
         },
         "flask": {
             "hashes": [
@@ -413,7 +413,7 @@
             "extras": [
                 "auth",
                 "base",
-                "elasticsearch2",
+                "elasticsearch6",
                 "metadata",
                 "postgresql"
             ],
@@ -597,7 +597,7 @@
         },
         "invenio-search": {
             "extras": [
-                "elasticsearch2"
+                "elasticsearch6"
             ],
             "hashes": [
                 "sha256:13a3370fb508979f8d0fa2ffe834ae1abc39dc7fcf19e1aec6b2c2b9dedab8f8",
@@ -625,6 +625,13 @@
                 "sha256:6ab44b7a7682b2ba883f58256bec3c789491c7e78b8e3526622e978647aa2ae6"
             ],
             "version": "==1.0.1"
+        },
+        "ipaddress": {
+            "hashes": [
+                "sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794",
+                "sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c"
+            ],
+            "version": "==1.0.22"
         },
         "ipython": {
             "hashes": [
