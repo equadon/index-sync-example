@@ -151,3 +151,7 @@ OAISERVER_ID_PREFIX = 'oai:index-sync.com:'
 
 #: Switches off incept of redirects by Flask-DebugToolbar.
 DEBUG_TB_INTERCEPT_REDIRECTS = False
+
+SEARCH_ELASTIC_HOSTS = [
+    dict(host='localhost', port=9202)
+]
