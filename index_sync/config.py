@@ -102,7 +102,7 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/2'
 CELERY_BEAT_SCHEDULE = {
     'indexer': {
         'task': 'invenio_indexer.tasks.process_bulk_queue',
-        'schedule': timedelta(minutes=5),
+        'schedule': timedelta(seconds=10),
     },
     'accounts': {
         'task': 'invenio_accounts.tasks.clean_session_table',
@@ -160,7 +160,7 @@ SEARCH_SYNC_JOBS = dict(
     records=dict(
         cls='index_sync.sync.RecordSyncJob',
         params=dict(
-            rollover_threshold=100,
+            rollover_threshold=10,
             old_es_client=dict(host='http://es2', port=9200),
             new_es_client=SEARCH_ELASTIC_HOSTS[0],
             source_indexes=['records-record-v1.0.0'],
