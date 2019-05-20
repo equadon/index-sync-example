@@ -9,6 +9,8 @@
 
 from __future__ import absolute_import, print_function
 
+from flask import request
+
 from invenio_indexer.api import RecordIndexer
 from invenio_records_rest.facets import terms_filter
 from invenio_records_rest.utils import allow_all, check_elasticsearch
@@ -40,6 +42,9 @@ RECORDS_REST_ENDPOINTS = {
         record_loaders={
             'application/json': ('index_sync.records.loaders'
                                  ':json_v1'),
+            'application/json-patch+json': (
+                lambda: request.get_json(force=True)
+            )
         },
         list_route='/records/',
         item_route='/records/<pid(recid):pid_value>',

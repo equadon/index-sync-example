@@ -20,6 +20,3 @@ pipenv run invenio index queue init purge
 # Create admin role to rectict access
 pipenv run invenio roles create admin
 pipenv run invenio access allow superuser-access role admin
-
-# Create demo data
-pipenv run index-sync demo data --records 100

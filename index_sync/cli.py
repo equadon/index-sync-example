@@ -2,36 +2,36 @@ import json
 import random
 
 import click
+import requests
 from faker import Faker
 from flask.cli import with_appcontext
-from invenio_db import db
-from invenio_indexer.api import RecordIndexer
 from invenio_pidstore.models import PersistentIdentifier, PIDStatus
-from invenio_records.api import Record
+
+CREATE_URL = 'https://127.0.0.1:5000/api/records/'
+RECORD_URL = 'https://127.0.0.1:5000/api/records/{pid}'
 
 fake = Faker()
 
 
-def minter(pid_type, pid_field, record):
-    """Mint the given PID for the given record."""
-    PersistentIdentifier.create(
-        pid_type=pid_type,
-        pid_value=record[pid_field],
-        object_type="rec",
-        object_uuid=record.id,
-        status=PIDStatus.REGISTERED,
-    )
+def get_last_pid():
+    """Get the last inserted PID."""
+    try:
+        pid = PersistentIdentifier.query.order_by(
+            PersistentIdentifier.id.desc()
+        ).first()
+        return int(pid.id)
+    except:
+        return 1
 
 
-def create_records(start_pid, n_records):
+def create_records(n_create):
     """Generate records."""
-    record_ids = [i for i in range(start_pid, start_pid + n_records)]
-    records = []
+    start_pid = get_last_pid() + 1
     with click.progressbar(
-        record_ids,
-        label='Creating {} record(s)...'.format(n_records)
-    ) as bar:
-        for i in bar:
+        [i for i in range(start_pid, start_pid + n_create)],
+        label='Creating {} record(s)...'.format(n_create)
+    ) as record_pids:
+        for pid in record_pids:
             n_keywords = random.randint(0, 5)
             n_contributors = random.randint(1, 6)
 
@@ -56,17 +56,49 @@ def create_records(start_pid, n_records):
                 ))
 
             record = dict(
-                id=i,
+                id=pid,
                 title=fake.bs(),
                 keywords=[keywords.pop() for _ in range(n_keywords)],
                 publication_date=fake.date(pattern="%Y-%m-%d", end_datetime=None),
                 contributors=contributors
             )
-            record = Record.create(record)
-            minter('recid', 'id', record)
-            record.commit()
-            records.append(record)
-    return records
+            requests.post(CREATE_URL, json=record, verify=False)
+
+
+def delete_records(n_delete):
+    """Delete records."""
+    pids = random.sample([pid.id for pid in PersistentIdentifier.query.all()], n_delete)
+    with click.progressbar(
+        pids,
+        label='Deleting {} record(s)...'.format(n_delete)
+    ) as record_pids:
+        for pid in record_pids:
+            requests.delete(RECORD_URL.format(pid=pid), verify=False)
+
+
+def update_records(n_update):
+    """Update records."""
+    pids = [
+        pid.id
+        for pid in PersistentIdentifier.query.filter(
+            PersistentIdentifier.status != PIDStatus.DELETED
+        ).all()
+    ]
+    with click.progressbar(
+        random.sample(pids, n_update),
+        label='Updating {} record(s)...'.format(n_update)
+    ) as record_pids:
+        for pid in record_pids:
+            headers = {'content-type': 'application/json-patch+json'}
+            ops = [
+                dict(op='replace', path='/title', value=fake.bs())
+            ]
+            requests.patch(
+                RECORD_URL.format(pid=pid),
+                headers=headers,
+                json=ops,
+                verify=False
+            )
 
 
 @click.group()
@@ -75,18 +107,19 @@ def demo():
 
 
 @demo.command()
-@click.option("--records", "n_records", default=100)
-@click.option("--start-pid", "start_pid", default=1)
+@click.option("--create", "n_create", default=0)
+@click.option("--delete", "n_delete", default=0)
+@click.option("--update", "n_update", default=0)
 @with_appcontext
-def data(n_records, start_pid):
+def data(n_create, n_delete, n_update):
     """Insert demo data."""
     click.secho('Generating demo data', fg='yellow')
 
-    indexer = RecordIndexer()
+    if n_create > 0:
+        create_records(n_create)
 
-    records = create_records(start_pid, n_records)
-    db.session.commit()
+    if n_delete > 0:
+        delete_records(n_delete)
 
-    click.secho('Indexing {} record(s)...'.format(len(records)), fg='green')
-    indexer.bulk_index([str(r.id) for r in records])
-    indexer.process_bulk_queue()
+    if n_update > 0:
+        update_records(n_update)
