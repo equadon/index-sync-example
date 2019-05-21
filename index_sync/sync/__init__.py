@@ -13,4 +13,6 @@ from .. import config
 
 
 class RecordSyncJob(SyncJob):
-    pass
+    def rollover(self):
+        """Rollover."""
+        print('RecordSyncJob::rollover()')
