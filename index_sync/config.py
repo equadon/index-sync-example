@@ -158,7 +158,7 @@ SEARCH_ELASTIC_HOSTS = [
 
 SEARCH_INDEX_PREFIX = 'test-'
 
-SEARCH_SYNC_JOBS = dict(
+INDEX_MIGRATOR_JOBS = dict(
     records=dict(
         cls='index_sync.sync.RecordSyncJob',
         params=dict(
@@ -166,6 +166,7 @@ SEARCH_SYNC_JOBS = dict(
             src_es_client=dict(
                 version=2,
                 prefix='',
+                suffix='',
                 params=dict(host='http://es2', port=9200)
             ),
             pid_mappings={
