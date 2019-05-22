@@ -7,7 +7,7 @@
 
 """Index Sync."""
 
-from invenio_search.sync import SyncJob
+from invenio_index_migrator.api import SyncJob
 
 from .. import config
 
