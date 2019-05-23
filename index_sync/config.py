@@ -158,14 +158,13 @@ SEARCH_ELASTIC_HOSTS = [
 
 SEARCH_INDEX_PREFIX = 'test-'
 
-INDEX_MIGRATOR_JOBS = dict(
+INDEX_MIGRATOR_RECIPES = dict(
     records=dict(
         cls='index_sync.sync.RecordSyncJob',
         params=dict(
             rollover_threshold=10,
             src_es_client=dict(
                 prefix='',
-                suffix='',
                 version=2,
                 params=dict(
                     host='es2',
@@ -173,9 +172,12 @@ INDEX_MIGRATOR_JOBS = dict(
                     use_ssl=False,
                 ),
             ),
-            pid_mappings={
-                'recid': 'records-record-v1.0.0'
-            }
+            jobs=[
+                dict(
+                    pid_type='recid',
+                    index='records-record-v1.0.0'
+                )
+            ]
         )
     )
 )
