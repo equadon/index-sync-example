@@ -164,10 +164,14 @@ INDEX_MIGRATOR_JOBS = dict(
         params=dict(
             rollover_threshold=10,
             src_es_client=dict(
-                version=2,
                 prefix='',
                 suffix='',
-                params=dict(host='http://es2', port=9200)
+                version=2,
+                params=dict(
+                    host='es2',
+                    port=9200,
+                    use_ssl=False,
+                ),
             ),
             pid_mappings={
                 'recid': 'records-record-v1.0.0'
