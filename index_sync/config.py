@@ -162,7 +162,6 @@ INDEX_MIGRATOR_RECIPES = dict(
     records=dict(
         cls='index_sync.sync.RecordSyncJob',
         params=dict(
-            rollover_threshold=10,
             src_es_client=dict(
                 prefix='',
                 version=2,
@@ -175,7 +174,8 @@ INDEX_MIGRATOR_RECIPES = dict(
             jobs=[
                 dict(
                     pid_type='recid',
-                    index='records-record-v1.0.0'
+                    index='records-record-v1.0.0',
+                    rollover_threshold=10,
                 )
             ]
         )
