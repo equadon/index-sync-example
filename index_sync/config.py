@@ -160,7 +160,7 @@ SEARCH_INDEX_PREFIX = 'test-'
 
 INDEX_MIGRATOR_RECIPES = dict(
     records=dict(
-        cls='index_sync.sync.RecordSyncJob',
+        cls='invenio_index_migrator.api.Migration',
         params=dict(
             src_es_client=dict(
                 prefix='',
@@ -171,13 +171,14 @@ INDEX_MIGRATOR_RECIPES = dict(
                     use_ssl=False,
                 ),
             ),
-            jobs=[
-                dict(
+            jobs=dict(
+                reindex_job=dict(
+                    cls='invenio_index_migrator.api.ReindexJob',
                     pid_type='recid',
                     index='records-record-v1.0.0',
                     rollover_threshold=10,
                 )
-            ]
+            )
         )
     )
 )
