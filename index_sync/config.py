@@ -17,6 +17,8 @@ from __future__ import absolute_import, print_function
 
 from datetime import timedelta
 
+from invenio_index_migrator.api import Migration
+
 
 def _(x):
     """Identity function used to trigger string extraction."""
@@ -162,6 +164,7 @@ INDEX_MIGRATOR_RECIPES = dict(
     records=dict(
         cls='invenio_index_migrator.api.Migration',
         params=dict(
+            strategy=Migration.CROSS_CLUSTER_STRATEGY,
             src_es_client=dict(
                 prefix='',
                 version=2,
