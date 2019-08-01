@@ -173,7 +173,7 @@ INDEX_MIGRATOR_RECIPES = dict(
             ),
             jobs=dict(
                 reindex_job=dict(
-                    cls='invenio_index_migrator.api.ReindexJob',
+                    cls='invenio_index_migrator.api.job.ReindexAndSyncJob',
                     pid_type='recid',
                     index='records-record-v1.0.0',
                     rollover_threshold=10,
